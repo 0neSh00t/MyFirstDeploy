@@ -1,0 +1,32 @@
+name: Deploy to AWS
+
+on: 
+  push: 
+    branches: [ develop ]
+
+
+jobs:
+  build: 
+    environment: develop
+    runs-on: ubuntu-latest
+
+
+env: 
+AWS_REGION: us-east-1
+AWS:ACCOUNT:    
+#AWS_VPC:
+
+permisions:
+  contents: read
+
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with: 
+        role-to-assume: ${{ secrets.AWS_GITHUB_ROLE }}
+        aws-region: ${{ env.AWS_REGION }}
+
+
